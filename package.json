@@ -1,0 +1,22 @@
+{
+  "name": "bamazon",
+  "version": "1.0.0",
+  "description": "amazon-like app using mysql",
+  "main": "bamazonCustomer.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/m-fiks/BAMAZON.git"
+  },
+  "author": "Madeleine Fiksdal",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/m-fiks/BAMAZON/issues"
+  },
+  "homepage": "https://github.com/m-fiks/BAMAZON#readme",
+  "dependencies": {
+    "mysql": "^2.15.0"
+  }
+}
