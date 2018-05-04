@@ -9,18 +9,30 @@ const connection = mysql.createConnection({
     database: 'bamazon'
 });
 
+//display data from mySQL for item
+function displayData (data) {
+    data.forEach((elem)=>{
+        let sqlID = elem.id;
+        let name = elem.product_name;
+        let price = elem.price;
+        let quantity = elem.stock_quantity;
+        console.log(`${name} in stock at a price of:$${price}. Quantity: ${quantity}.`);
+        userNeeds(quantity);
+
+    })
+};
+
+//prompt user - get ID for product
 function getID() {
-    inquirer.prompt([
-        {
-            type: 'input',
-            message: 'What is the ID of the product?',
-            name: 'prodID'
-        }
-    ]).then((answers)=>{
+    inquirer.prompt([{
+        type: 'input',
+        message: 'What is the ID of the product?',
+        name: 'prodID'
+    }]).then((answers)=>{
         //console.log(answers.prodID);
         if (isNaN(answers.prodID) === false){
             let id = answers.prodID;
-            connection.connect((err, data)=>{
+            connection.connect((err, data)=> {
                 if (err) throw err;
                 //console.log('CONNECTED');
                 
@@ -28,14 +40,7 @@ function getID() {
                 let sqlVar = "SELECT * FROM products WHERE id = ?";
                 connection.query(sqlVar, [id], (err, data) => {
                     if(err) throw err;
-                    data.forEach((elem)=>{
-                        let sqlID = elem.id;
-                        let name = elem.product_name;
-                        let price = elem.price;
-                        let quantity = elem.stock_quantity;
-                        console.log(`${name} in stock at a price of:$${price}. Quantity: ${quantity}.`);
-                        userNeeds();
-                    });
+                    displayData(data);
                 })
                 //end connection
                 connection.end();
@@ -50,7 +55,7 @@ function getID() {
 
 getID();
 
-function userNeeds () {
+function userNeeds (quantity) {
     inquirer.prompt([
         {
         type: 'input',
@@ -59,25 +64,22 @@ function userNeeds () {
         }
     ]).then((answers)=>{
         if (isNaN(answers.userQuantity) === false){
-
+            let userQuantity = answers.userQuantity;
+            if (userQuantity < quantity && userQuantity > 0){
+                console.log('this is okay');
+            }
+            else if (userQuantity == 0) {
+                console.log(`Please enter in a valid desired quantity.`)
+                userNeeds(quantity);
+            }
+            else{
+                console.log('sorry we do not have that many');
+                userNeeds(quantity);
+            }
         }
         else{
             console.log(`Please enter in a valid desired quantity.`)
-            userNeeds();
+            userNeeds(quantity);
         }
     })
 }
-
-
-
-
-// .then((answers) => {
-//     console.log(answers.artist)
-//     let sql = "SELECT * FROM top5000 WHERE ?";
-//     connection.query(sql, {artist: answers.artist}, (err, result) => {
-//         if (err) throw err;
-//         for(key in result){
-//             console.log(result[key].title);
-//         }
-//     })
-// })
