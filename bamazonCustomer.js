@@ -17,7 +17,7 @@ function displayData (data) {
         let price = elem.price;
         let quantity = elem.stock_quantity;
         console.log(`${name} in stock at a price of:$${price}. Quantity: ${quantity}.`);
-        userNeeds(quantity);
+        userNeeds(quantity,price);
 
     })
 };
@@ -55,7 +55,7 @@ function getID() {
 
 getID();
 
-function userNeeds (quantity) {
+function userNeeds (quantity,price) {
     inquirer.prompt([
         {
         type: 'input',
@@ -66,20 +66,24 @@ function userNeeds (quantity) {
         if (isNaN(answers.userQuantity) === false){
             let userQuantity = answers.userQuantity;
             if (userQuantity < quantity && userQuantity > 0){
+                //update db to quantity - userQuantity
+                //multiple userQuantity * price to display total
+                let total = (userQuantity * price).toFixed(2);
+                console.log(`Your total is ${total}.`)
                 console.log('this is okay');
             }
             else if (userQuantity == 0) {
                 console.log(`Please enter in a valid desired quantity.`)
-                userNeeds(quantity);
+                userNeeds(quantity,price);
             }
             else{
                 console.log('sorry we do not have that many');
-                userNeeds(quantity);
+                userNeeds(quantity,price);
             }
         }
         else{
             console.log(`Please enter in a valid desired quantity.`)
-            userNeeds(quantity);
+            userNeeds(quantity,price);
         }
     })
 }
