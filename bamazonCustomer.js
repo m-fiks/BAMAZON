@@ -1,5 +1,6 @@
 const mysql = require('mysql');
 const inquirer = require('inquirer');
+const clc = require('cli-color');
 
 const connection = mysql.createConnection({
     host: 'localhost',
@@ -16,7 +17,7 @@ function displayData (data) {
         let name = elem.product_name;
         let price = elem.price;
         let quantity = elem.stock_quantity;
-        console.log(`${name} in stock at a price of:$${price}. Quantity: ${quantity}.`);
+        console.log(clc.cyan(`${name} in stock at a price of:$${price}. Quantity: ${quantity}.`));
         userNeeds(quantity,price,sqlID);
 
     })
@@ -45,7 +46,7 @@ function getID() {
             })
         }
         else{
-            console.log('Please enter in a valid product ID (number 1-11)');
+            console.log(clc.red.bold('Please enter in a valid product ID (number 1-11)'));
             getID();
         }
     });
@@ -67,7 +68,8 @@ function userNeeds (quantity,price,id) {
             if (userQuantity < quantity && userQuantity > 0){
                 //update db to quantity - userQuantity
                 let newQuant = quantity - userQuantity;
-                console.log(newQuant)
+                // console.log(newQuant)
+                
                 let sqlUpdate = "UPDATE products SET stock_quantity = ? WHERE id = ?"
                 connection.query(sqlUpdate, [newQuant,id], (err, data) => {
                     if(err) throw err;
@@ -75,24 +77,25 @@ function userNeeds (quantity,price,id) {
                 })
                 //multiple userQuantity * price to display total
                 let total = (userQuantity * price).toFixed(2);
-                console.log(`Your total is ${total}.`)
-                console.log('this is okay');
+                console.log(`Your total is $${total}.`)
             }
             else if (userQuantity == 0) {
-                console.log(`Please enter in a valid desired quantity.`)
+                console.log(clc.red.bold(`Please enter in a valid desired quantity.`))
                 userNeeds(quantity,price,id);
             }
             else{
-                console.log('sorry we do not have that many');
+                console.log(clc.red.bold('Sorry, we do not have that many in stock.'));
                 userNeeds(quantity,price,id);
             }
         }
         else{
-            console.log(`Please enter in a valid desired quantity.`)
+            console.log(clc.red.bold(`Please enter in a valid desired quantity.`))
             userNeeds(quantity,price,id);
         }
-        //end connection
-        connection.end();
+
     })
     
 }
+
+        //end connection
+        // connection.end();
