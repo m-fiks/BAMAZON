@@ -87,7 +87,7 @@ function userNeeds (quantity,price,id) {
                 let sqlUpdate = "UPDATE products SET stock_quantity = ? WHERE id = ?"
                 connection.query(sqlUpdate, [newQuant,id], (err, data) => {
                     if(err) throw err;
-                    console.log(`1 item updated`);
+                    //console.log(`1 item updated`);
                 })
                 //multiple userQuantity * price to display total
                 let total = (userQuantity * price).toFixed(2);
