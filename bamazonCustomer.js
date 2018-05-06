@@ -24,6 +24,29 @@ const connection = mysql.createConnection({
 //     '11' : 'Goodnight Moon'
 // }
 
+//prompt user to do another transaction
+function buyMore () {
+    inquirer.prompt([
+        {
+            type: 'list',
+            message: 'Would you like to purchase another item?',
+            choices: ['yes', 'no'],
+            name: 'start_over'
+
+        }
+    ]).then((answers) => {
+        //console.log(answers);
+        if (answers.start_over === 'yes'){
+            getID();
+        }
+        else{
+            console.log(`Thanks for shopping with us!`)
+            //end connection
+            connection.end();
+        }
+    })
+};
+
 //display data from mySQL for item
 function displayData (data) {
     data.forEach((elem)=>{
@@ -47,17 +70,13 @@ function getID() {
         //console.log(answers.prodID);
         if (isNaN(answers.prodID) === false){
             let id = answers.prodID;
-            
-            //connect to DB
-            connection.connect((err, data)=> {
-                if (err) throw err;
-                //? is placeholder for id variable, pass id as 2nd param
-                let sqlVar = "SELECT * FROM products WHERE id = ?";
-                connection.query(sqlVar, [id], (err, data) => {
-                    if(err) throw err;
-                    displayData(data);
-                })
-            });
+
+            //? is placeholder for id variable, pass id as 2nd param
+            let sqlVar = "SELECT * FROM products WHERE id = ?";
+            connection.query(sqlVar, [id], (err, data) => {
+                if(err) throw err;
+                displayData(data);
+            })
         }
         else{
             console.log(clc.red.bold('Please enter in a valid product ID (number 1-11)'));
@@ -84,6 +103,7 @@ function userNeeds (quantity,price,id) {
                 let newQuant = quantity - userQuantity;
                 // console.log(newQuant)
 
+                //update db to subtract what user "bought"
                 let sqlUpdate = "UPDATE products SET stock_quantity = ? WHERE id = ?"
                 connection.query(sqlUpdate, [newQuant,id], (err, data) => {
                     if(err) throw err;
@@ -91,9 +111,9 @@ function userNeeds (quantity,price,id) {
                 })
                 //multiple userQuantity * price to display total
                 let total = (userQuantity * price).toFixed(2);
-                console.log(`Your total is $${total}.`)
-                //end connection
-                connection.end();
+                console.log(`Great! Your total is $${total}.`)
+                buyMore();
+                
             }
             else if (userQuantity == 0) {
                 console.log(clc.red.bold(`Please enter in a valid desired quantity.`))
