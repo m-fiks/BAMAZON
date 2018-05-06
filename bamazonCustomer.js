@@ -17,7 +17,7 @@ function displayData (data) {
         let price = elem.price;
         let quantity = elem.stock_quantity;
         console.log(`${name} in stock at a price of:$${price}. Quantity: ${quantity}.`);
-        userNeeds(quantity,price);
+        userNeeds(quantity,price,sqlID);
 
     })
 };
@@ -42,8 +42,6 @@ function getID() {
                     if(err) throw err;
                     displayData(data);
                 })
-                //end connection
-                connection.end();
             })
         }
         else{
@@ -55,7 +53,7 @@ function getID() {
 
 getID();
 
-function userNeeds (quantity,price) {
+function userNeeds (quantity,price,id) {
     inquirer.prompt([
         {
         type: 'input',
@@ -63,10 +61,18 @@ function userNeeds (quantity,price) {
         name: 'userQuantity'
         }
     ]).then((answers)=>{
+        console.log(id);
         if (isNaN(answers.userQuantity) === false){
             let userQuantity = answers.userQuantity;
             if (userQuantity < quantity && userQuantity > 0){
                 //update db to quantity - userQuantity
+                let newQuant = quantity - userQuantity;
+                console.log(newQuant)
+                let sqlUpdate = "UPDATE products SET stock_quantity = ? WHERE id = ?"
+                connection.query(sqlUpdate, [newQuant,id], (err, data) => {
+                    if(err) throw err;
+                    console.log(`1 item updated`);
+                })
                 //multiple userQuantity * price to display total
                 let total = (userQuantity * price).toFixed(2);
                 console.log(`Your total is ${total}.`)
@@ -74,16 +80,19 @@ function userNeeds (quantity,price) {
             }
             else if (userQuantity == 0) {
                 console.log(`Please enter in a valid desired quantity.`)
-                userNeeds(quantity,price);
+                userNeeds(quantity,price,id);
             }
             else{
                 console.log('sorry we do not have that many');
-                userNeeds(quantity,price);
+                userNeeds(quantity,price,id);
             }
         }
         else{
             console.log(`Please enter in a valid desired quantity.`)
-            userNeeds(quantity,price);
+            userNeeds(quantity,price,id);
         }
+        //end connection
+        connection.end();
     })
+    
 }
