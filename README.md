@@ -32,7 +32,7 @@
 ![gif of app](https://media.giphy.com/media/TgJ6wWNZsmjas9xEUs/giphy.gif)
 
 * Link to project walk-through 
-[bamazon](https://vimeo.com/268651639)
+[bamazon](https://vimeo.com/268675204)
 
 ## License
 [MIT License](https://github.com/m-fiks/BAMAZON/blob/master/LICENSE)
