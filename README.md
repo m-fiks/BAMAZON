@@ -26,10 +26,13 @@
 * Run `'npm install mysql'`
 * Run `'npm install inquirer'`
 * Run `'npm install cli-color'`
-* Run `'node bamazonCustomer.js'` to begin application
+* Run `'node bamazonCustomer.js'` to begin running application
 
 ## How It Works
 ![gif of app](https://media.giphy.com/media/TgJ6wWNZsmjas9xEUs/giphy.gif)
+
+* Link to project walk-through 
+![bamazon](https://vimeo.com/268651639)
 
 
 ## License
