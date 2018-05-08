@@ -7,7 +7,7 @@
 
 - [Tech Used](#tech-used)
 - [Installation](#installation)
-- [Commands](#Commands)
+- [How It Works](#How-It-Works)
 - [License](#license)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -22,22 +22,15 @@
 ## Installation
 
 * Clone repo
-* Obtain API keys for Twitter, Spotify, and OMDB
-* Create .env file that houses API keys
-* Run `'npm install'` in terminal
-* Run `'node liri.js'` followed by one of the commands listed below
+* Run `'npm init'` in terminal
+* Run `'npm install mysql'`
+* Run `'npm install inquirer'`
+* Run `'npm install cli-color'`
+* Run `'node bamazonCustomer.js'` to begin application
 
-## Commands
-* `node liri.js 'my-tweets'`
-- displays last 20 tweets and when they were created
-* `node liri.js 'spotify-this-song' '<song name>'`
-- displays information listed below for the song requested
-- song name, artist, album song is from, and a preview link
-* `node liri.js 'movie-this' '<movie name>'`
-- displays information listed below for the movie requested
-- title, year movie was released, IMDB rating, Rotten Tomatoes rating, country movie was produced, language of the movie, plot of the movie, actors in the movie
-* `node liri.js 'do-what-it-says'`
-- takes the text from 'random.txt' and run the `'spotify-this-song'` command for 'I Want it that Way'
+## How It Works
+![gif of app](https://media.giphy.com/media/TgJ6wWNZsmjas9xEUs/giphy.gif)
+
 
 ## License
-[MIT License](https://github.com/m-fiks/liriBot/blob/master/LICENSE)
+[MIT License](https://github.com/m-fiks/BAMAZON/blob/master/LICENSE)

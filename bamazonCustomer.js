@@ -14,7 +14,7 @@ const connection = mysql.createConnection({
 function showAll () {
     let sqlInit = "SELECT * FROM products";
     connection.query(sqlInit, (err, data)=>{
-        console.log(clc.blue.bgWhiteBright.underline(`-------------ITEMS IN STOCK ------------`))
+        console.log(clc.blue.bgWhiteBright.underline(`-------------ITEMS IN STOCK -----------`))
         data.forEach((elem) => {
             console.log(clc.blue(`${elem.id}.) ${elem.product_name}`)) 
         })
