@@ -19,11 +19,11 @@ function showAll () {
             console.log(`${elem.id}.) ${elem.product_name}`) 
         })
         console.log(`---------------------------------------------`)
-    })    
+        getID(); 
+    }) 
 }
-
 showAll();
-getID();
+
 //prompt user to do another transaction
 function buyMore () {
     inquirer.prompt([
@@ -37,7 +37,7 @@ function buyMore () {
     ]).then((answers) => {
         //console.log(answers);
         if (answers.start_over === 'yes'){
-            getID();
+            showAll();
         }
         else{
             console.log(`Thanks for shopping with us!`)
@@ -68,13 +68,14 @@ function getID() {
         name: 'prodID'
     }]).then((answers)=>{
         //console.log(answers.prodID);
+        //make sure user did not enter in 0
         if (answers.prodID == 0){
             console.log(clc.red.bold('Please enter in a valid product ID (number 1-11)'));
             getID();
         }
+        //if user entered in valid product ID
         else if (isNaN(answers.prodID) === false){
             let id = answers.prodID;
-
             //? is placeholder for id variable, pass id as 2nd param
             let sqlVar = "SELECT * FROM products WHERE id = ?";
             connection.query(sqlVar, [id], (err, data) => {
@@ -82,14 +83,13 @@ function getID() {
                 displayData(data);
             })
         }
+        //account for everything else
         else{
             console.log(clc.red.bold('Please enter in a valid product ID (number 1-11)'));
             getID();
         }
     });
 };
-
-// getID();
 
 function userNeeds (quantity,price,id) {
     inquirer.prompt([
