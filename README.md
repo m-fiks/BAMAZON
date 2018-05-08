@@ -31,9 +31,8 @@
 ## How It Works
 ![gif of app](https://media.giphy.com/media/TgJ6wWNZsmjas9xEUs/giphy.gif)
 
-*Link to project walk-through below*
-<a href="https://vimeo.com/268651639" target="_blank">BAMAZON</a>
-
+* Link to project walk-through 
+[bamazon](https://vimeo.com/268651639)
 
 ## License
 [MIT License](https://github.com/m-fiks/BAMAZON/blob/master/LICENSE)
