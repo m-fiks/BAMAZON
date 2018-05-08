@@ -14,11 +14,11 @@ const connection = mysql.createConnection({
 function showAll () {
     let sqlInit = "SELECT * FROM products";
     connection.query(sqlInit, (err, data)=>{
-        console.log(`ITEMS IN STOCK:`)
+        console.log(clc.blue.bgWhiteBright.underline(`-------------ITEMS IN STOCK ------------`))
         data.forEach((elem) => {
-            console.log(`${elem.id}.) ${elem.product_name}`) 
+            console.log(clc.blue(`${elem.id}.) ${elem.product_name}`)) 
         })
-        console.log(`---------------------------------------------`)
+        console.log(clc.blue.bgWhiteBright(`------------------------------------------`));
         getID(); 
     }) 
 }
