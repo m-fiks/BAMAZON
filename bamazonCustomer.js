@@ -68,7 +68,11 @@ function getID() {
         name: 'prodID'
     }]).then((answers)=>{
         //console.log(answers.prodID);
-        if (isNaN(answers.prodID) === false){
+        if (answers.prodID == 0){
+            console.log(clc.red.bold('Please enter in a valid product ID (number 1-11)'));
+            getID();
+        }
+        else if (isNaN(answers.prodID) === false){
             let id = answers.prodID;
 
             //? is placeholder for id variable, pass id as 2nd param
