@@ -10,20 +10,20 @@ const connection = mysql.createConnection({
     database: 'bamazon'
 });
 
-// const items = {
-//     '1' : 'Purina One Wet Cat Food',
-//     '2' : 'Downy Wrinkle Release Spray',
-//     '3' : 'Essie Nail Polish, white',
-//     '4' : 'Manic Panic Hair Bleach',
-//     '5' : 'Black Diamond Momentum Harness',
-//     '6' : 'Wear24 Android Wear 2.0 Watch',
-//     '7' : 'Star Trek: The Next Generation Season 5',
-//     '8' : 'iRobot Roomba',
-//     '9' : 'Tassel Earrings',
-//     '10' : 'Hankook Off-Road-Tire',
-//     '11' : 'Goodnight Moon'
-// }
+//display inventory
+function showAll () {
+    let sqlInit = "SELECT * FROM products";
+    connection.query(sqlInit, (err, data)=>{
+        console.log(`ITEMS IN STOCK:`)
+        data.forEach((elem) => {
+            console.log(`${elem.id}.) ${elem.product_name}`) 
+        })
+        console.log(`---------------------------------------------`)
+    })    
+}
 
+showAll();
+getID();
 //prompt user to do another transaction
 function buyMore () {
     inquirer.prompt([
@@ -85,7 +85,7 @@ function getID() {
     });
 };
 
-getID();
+// getID();
 
 function userNeeds (quantity,price,id) {
     inquirer.prompt([
